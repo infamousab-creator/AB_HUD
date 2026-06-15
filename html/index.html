@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom HUD</title>
+    <link rel="stylesheet" href="css/hud.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     STATUS BARS — bottom left
+════════════════════════════════════════════ -->
+<div id="hud-status" class="hud-visible">
+
+    <!-- Health -->
+    <div class="stat-row" id="stat-health">
+        <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div class="stat-bar-wrap">
+            <div class="stat-label">HEALTH</div>
+            <div class="stat-track">
+                <div class="stat-fill" id="health-fill" style="width:100%"></div>
+                <div class="stat-glow" id="health-glow"></div>
+            </div>
+        </div>
+        <div class="stat-value" id="health-val">100</div>
+    </div>
+
+    <!-- Armour -->
+    <div class="stat-row" id="stat-armour">
+        <div class="stat-icon armour">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        </div>
+        <div class="stat-bar-wrap">
+            <div class="stat-label">ARMOUR</div>
+            <div class="stat-track">
+                <div class="stat-fill armour" id="armour-fill" style="width:100%"></div>
+                <div class="stat-glow armour" id="armour-glow"></div>
+            </div>
+        </div>
+        <div class="stat-value" id="armour-val">100</div>
+    </div>
+
+    <!-- Hunger -->
+    <div class="stat-row" id="stat-hunger">
+        <div class="stat-icon hunger">
+            <svg viewBox="0 0 24 24"><path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03z"/></svg>
+        </div>
+        <div class="stat-bar-wrap">
+            <div class="stat-label">HUNGER</div>
+            <div class="stat-track">
+                <div class="stat-fill hunger" id="hunger-fill" style="width:100%"></div>
+                <div class="stat-glow hunger" id="hunger-glow"></div>
+            </div>
+        </div>
+        <div class="stat-value" id="hunger-val">100</div>
+    </div>
+
+    <!-- Thirst -->
+    <div class="stat-row" id="stat-thirst">
+        <div class="stat-icon thirst">
+            <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
+        </div>
+        <div class="stat-bar-wrap">
+            <div class="stat-label">THIRST</div>
+            <div class="stat-track">
+                <div class="stat-fill thirst" id="thirst-fill" style="width:100%"></div>
+                <div class="stat-glow thirst" id="thirst-glow"></div>
+            </div>
+        </div>
+        <div class="stat-value" id="thirst-val">100</div>
+    </div>
+
+    <!-- Stress (optional) -->
+    <div class="stat-row" id="stat-stress" style="display:none">
+        <div class="stat-icon stress">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        </div>
+        <div class="stat-bar-wrap">
+            <div class="stat-label">STRESS</div>
+            <div class="stat-track">
+                <div class="stat-fill stress" id="stress-fill" style="width:0%"></div>
+                <div class="stat-glow stress" id="stress-glow"></div>
+            </div>
+        </div>
+        <div class="stat-value" id="stress-val">0</div>
+    </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SPEEDOMETER — bottom centre
+════════════════════════════════════════════ -->
+<div id="hud-speed" class="hud-hidden">
+    <div class="speed-ring-wrap">
+        <svg class="speed-ring" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52" />
+            <circle class="ring-fill" id="speed-arc" cx="60" cy="60" r="52"
+                    stroke-dasharray="0 326.73" stroke-dashoffset="81.68"/>
+        </svg>
+        <div class="speed-inner">
+            <div class="speed-num" id="speed-val">0</div>
+            <div class="speed-unit" id="speed-unit">KM/H</div>
+        </div>
+    </div>
+
+    <div class="gear-row">
+        <div class="gear-label">GEAR</div>
+        <div class="gear-val" id="gear-val">N</div>
+    </div>
+
+    <div class="fuel-row">
+        <svg class="fuel-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11c-.94.36-1.61 1.26-1.61 2.33 0 1.38 1.12 2.5 2.5 2.5.36 0 .69-.08 1-.21v7.21c0 .55-.45 1-1 1s-1-.45-1-1V14c0-1.1-.9-2-2-2h-1V5c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v16h10v-7.5h1.5v5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V9c0-.69-.28-1.32-.73-1.77zM18 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM8 18v-4.5H6L10 7v4.5h2L8 18z"/></svg>
+        <div class="fuel-track">
+            <div class="fuel-fill" id="fuel-fill" style="width:80%"></div>
+        </div>
+        <div class="fuel-val" id="fuel-val">80%</div>
+    </div>
+
+    <div class="engine-row" id="engine-status">
+        <span class="engine-dot" id="engine-dot"></span>
+        <span class="engine-label" id="engine-label">ENGINE OK</span>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MINIMAP OVERLAY — bottom right
+════════════════════════════════════════════ -->
+<div id="hud-minimap">
+    <div class="minimap-frame">
+        <canvas id="minimap-canvas" width="200" height="200"></canvas>
+        <div class="minimap-border"></div>
+        <div class="minimap-compass">
+            <span id="compass-dir">N</span>
+        </div>
+        <div class="minimap-coords" id="map-coords">0 / 0</div>
+        <div class="minimap-zone" id="map-zone">Los Santos</div>
+        <div class="minimap-ping" id="minimap-ping"></div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PLAYER INFO — top left
+════════════════════════════════════════════ -->
+<div id="hud-player">
+    <div class="player-avatar">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+    <div class="player-details">
+        <div class="player-name" id="player-name">Player</div>
+        <div class="player-job" id="player-job">Civilian</div>
+        <div class="player-id-row">
+            <span class="pid-label">ID</span>
+            <span class="pid-val" id="player-id">—</span>
+            <span class="money-icon">$</span>
+            <span class="pid-val" id="player-money">0</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     NOTIFICATION STACK — top right
+════════════════════════════════════════════ -->
+<div id="hud-notifications"></div>
+
+<!-- ═══════════════════════════════════════════
+     CINEMATIC BARS (optional)
+════════════════════════════════════════════ -->
+<div class="cinematic-bar top" id="cin-top"></div>
+<div class="cinematic-bar bottom" id="cin-bottom"></div>
+
+<script src="js/notifications.js"></script>
+<script src="js/minimap.js"></script>
+<script src="js/hud.js"></script>
+</body>
+</html>
